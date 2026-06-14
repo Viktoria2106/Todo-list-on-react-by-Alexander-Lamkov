@@ -27,7 +27,7 @@ const TodoItem = (props) => {
       className="todo-item__delete-button"
       aria-label="Delete"
       title="Delete"
-      onClick={() => onDeleteTaskButtonClick()}
+      onClick={() => onDeleteTaskButtonClick(id)}
     >
       <svg
         width="20"
