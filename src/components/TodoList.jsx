@@ -3,33 +3,41 @@ import TodoItem from "./TodoItem"
 const TodoList = (props) => {
   const {
     tasks = [],
+    filteredTasks,
     onDeleteTaskButtonClick,
     onTaskCompleteChange,
   } = props
 
-  const hasTasks = true
+  console.log('TodoList props:', { tasks, filteredTasks })  // 👈 ЛОГ
+
+  const hasTasks = tasks.length > 0
+  const isEmptyFilteredTasks = filteredTasks?.length === 0
+
+  console.log('hasTasks:', hasTasks, 'isEmptyFilteredTasks:', isEmptyFilteredTasks) // 👈 ЛОГ
 
   if (!hasTasks) {
-    return (
-      <div className="todo__empty-message"></div>
-    )
+    return <div className="todo__empty-message">There are no tasks yet</div>
   }
+
+  if (isEmptyFilteredTasks) {
+    return <div className="todo__empty-message">Tasks not found</div>
+  }
+
+  const tasksToRender = filteredTasks ?? tasks
 
   return (
     <ul className="todo__list">
-      {tasks.map((task) => (
+      {tasksToRender.map((task) => (
         <TodoItem
-        className="todo__item"
-        key={task.id}
-        onDeleteTaskButtonClick={onDeleteTaskButtonClick}
-        onTaskCompleteChange={onTaskCompleteChange}
-        {...task}
+          className="todo__item"
+          key={task.id}
+          onDeleteTaskButtonClick={onDeleteTaskButtonClick}
+          onTaskCompleteChange={onTaskCompleteChange}
+          {...task}
         />
       ))}
-
-  </ul>
+    </ul>
   )
 }
-
 
 export default TodoList
